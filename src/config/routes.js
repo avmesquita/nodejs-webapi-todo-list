@@ -1,5 +1,9 @@
 const express = require('express')
 
+//Swagger
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
 module.exports = function(server) {
 
     // API Routes
@@ -12,4 +16,8 @@ module.exports = function(server) {
 
     const userService = require('../api/users/userService')
     userService.register(router, '/users')
+
+    // Swagger
+    server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+    server.use('/api/v1', router);
 }
